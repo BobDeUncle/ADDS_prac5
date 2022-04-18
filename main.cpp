@@ -21,10 +21,6 @@ int main() {
     stringInput[i].erase(std::remove(stringInput[i].begin(), stringInput[i].end(), ','), stringInput[i].end());
     intInput.push_back(stoi(stringInput[i]));
   }
-  
-  for (int i = 0; i < 5; i++) {
-    cout << intInput.at(i) << endl; 
-  }
 
   MapAbsoluteValue test;
   intOutput = test.map(intInput);
