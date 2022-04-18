@@ -8,24 +8,43 @@
 #include "MapSquare.h"
 #include "MapAbsoluteValue.h"
 
+#include "FilterGeneric.h"
+#include "FilterOdd.h"
+#include "FilterNonPositive.h"
+#include "FilterForTwoDigitPositive.h"
+
+#include "ReduceGeneric.h"
+#include "ReduceMinimum.h"
+#include "ReduceGCD.h"
+
 using namespace std;
 
 int main() {
   string stringInput[20];
   vector<int> intInput;
-  vector<int> intOutput;
+  vector<int> output;
 
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < 19; i++) {
     cin >> stringInput[i];
     // From Fred Larson on StackOverflow - 'remove commas from string'
     stringInput[i].erase(std::remove(stringInput[i].begin(), stringInput[i].end(), ','), stringInput[i].end());
     intInput.push_back(stoi(stringInput[i]));
   }
 
-  MapAbsoluteValue test;
-  intOutput = test.map(intInput);
+  MapTriple maptriple;
+  MapAbsoluteValue mapabsolutevalue; 
 
-  for (int i = 0; i < intOutput.size(); i++) {
-    cout << intOutput.at(i) << endl; 
-  }
+  FilterForTwoDigitPositive filterfortwodigitpositive;
+  FilterOdd filterodd;
+
+  ReduceMinimum reduceminimum;
+  ReduceGCD reducegcd; 
+
+  output = maptriple.map(intInput);
+  output = mapabsolutevalue.map(output);
+
+  output = filterfortwodigitpositive.filter(output);
+  output = filterodd.filter(output);
+
+  cout << reduceminimum.reduce(output) << " " << reducegcd.reduce(output) << endl; 
 }
